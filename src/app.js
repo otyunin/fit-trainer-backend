@@ -10,15 +10,13 @@ const app = express()
 // Configuration
 const port = app.get('port') || 8080
 
-mongoose.connect(config.database.url, config.database.options, (err, db) => {
-  if (err) {
-    throw err
-  }
-  console.log('Database connected')
-  db.close()
-})
+mongoose.connect(config.database.url, config.database.options)
+  .then(() => console.log('Database connected'))
+mongoose.connection.on('error', error => {throw error})
 mongoose.Promise = global.Promise
 mongoose.set('useCreateIndex', true)
+
+app.set('superSecret', config.secret) // secret variable
 
 app.use(morgan('dev'))
 

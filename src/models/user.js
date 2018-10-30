@@ -8,20 +8,20 @@ const UserSchema = new Schema({
   email: {
     type: String,
     unique: true,
-    required: true
+    required: true,
   },
   password: {
     type: String,
-    required: true
+    required: true,
   },
   verificationCode: {
     type: String,
-    default: ''
+    default: '',
   },
   created: {
     type: Date,
-    default: Date.now
-  }
+    default: Date.now,
+  },
 })
 
 UserSchema.pre('save', async function (next) {
@@ -47,6 +47,6 @@ UserSchema.methods.isValidPassword = async function (newPassword) {
   }
 }
 
-const User = mongoose.model('User', UserSchema)
+const User = mongoose.model('user', UserSchema)
 
 module.exports = User
