@@ -1,15 +1,7 @@
 const User = require('../models/user')
-const jwt = require('jsonwebtoken')
 const passport = require('../passport')
-
-const { secret } = require('../../config')
-
-const signToken = user => {
-  const body = { id: user._id, email: user.email }
-  return jwt.sign({ user: body }, secret, {
-    expiresIn: '24h' // expires in 24 hours
-  })
-}
+const randomstring = require('randomstring')
+const { signToken }= require('../utils/token')
 
 module.exports = {
   signIn: async (req, res, next) => {
@@ -35,18 +27,25 @@ module.exports = {
     if (foundUser) {
       return res.status(400).json({
         success: false,
-        message: 'Email is already in use'
+        message: 'Email is already in use',
       })
     }
 
+    const verificationCode = randomstring.generate()
+
     // Create a new user
-    const newUser = new User({ email, password })
+    const newUser = new User({ email, password, verificationCode })
     await newUser.save()
 
-    // Generate the token
-    const token = signToken(newUser)
+    // Url to confirm email
+    const verificationUrl = `http://${req.headers.host}/verify-email/${newUser.email}/${verificationCode}`
 
-    // Respond with token
-    res.status(201).json({ success: true, token })
-  }
+    console.log('Email confirmation:', verificationUrl)
+
+    // Respond with verification code
+    res.status(201).json({
+      success: true,
+      verificationCode,
+    })
+  },
 }

@@ -22,6 +22,7 @@ app.use(morgan('dev'))
 
 // Routes
 const auth = require('./routes/auth')
+const verifyEmail = require('./routes/verifyEmail')
 
 // Middlewares
 app.use(bodyParser.json())
@@ -34,6 +35,7 @@ app.get('/', (req, res) => {
 
 // API routers
 app.use('/', auth)
+app.use('/verify-email', verifyEmail)
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {

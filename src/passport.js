@@ -37,6 +37,10 @@ async (email, password, done) => {
     if (!user) {
       return done(null, false, { message: 'Incorrect email' })
     }
+    // If the email has not been confirmed
+    if (user.verificationCode) {
+      return done(null, false, { message: 'Email not confirmed' })
+    }
     // Check if the password is correct
     const isMatch = await user.isValidPassword(password)
     // If not, handle it
