@@ -2,6 +2,7 @@ const express = require('express')
 const mongoose = require('mongoose')
 const morgan = require('morgan')
 const bodyParser = require('body-parser')
+const cors = require('cors')
 
 const config = require('../config')
 
@@ -18,6 +19,7 @@ mongoose.set('useCreateIndex', true)
 
 app.set('superSecret', config.secret) // secret variable
 
+app.use(cors())
 app.use(morgan('dev'))
 
 // Routes
@@ -27,6 +29,12 @@ const verifyEmail = require('./routes/verifyEmail')
 // Middlewares
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
+
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*')
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept')
+  next()
+})
 
 // basic route
 app.get('/', (req, res) => {
