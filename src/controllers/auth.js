@@ -28,7 +28,7 @@ module.exports = {
     })(req, res, next)
   },
   signUp: async (req, res) => {
-    const { email, password, repeatPassword } = req.body
+    const { email, password } = req.body
 
     // Check if there is a user with the same email
     const foundUser = await User.findOne({ email })
@@ -36,13 +36,6 @@ module.exports = {
       return res.status(400).json({
         success: false,
         message: 'Email is already in use'
-      })
-    }
-    // Check the passwords match
-    if (password !== repeatPassword) {
-      return res.status(400).json({
-        success: false,
-        message: 'Passwords don\'t match'
       })
     }
 
