@@ -6,13 +6,13 @@ module.exports = {
     try {
       const user = await User.findOne({ email: req.body.email })
       if (!user) {
-        return res.status(400).json({ success: false, message: 'User doesn\'t exist. Please register' })
+        return res.status(200).json({ success: false, message: 'User doesn\'t exist. Please register' })
       }
       if (!user.verificationCode) {
-        return res.status(400).json({ success: false, message: 'Your email has been verified' })
+        return res.status(200).json({ success: false, message: 'Your email has been verified' })
       }
       if (req.body.verificationCode !== user.verificationCode) {
-        return res.status(400).json({ success: false, message: 'Invalid verification code' })
+        return res.status(200).json({ success: false, message: 'Invalid verification code' })
       }
       // Confirm the email and give a token
       user.verificationCode = ''

@@ -25,7 +25,7 @@ module.exports = {
     // Check if there is a user with the same email
     const foundUser = await User.findOne({ email })
     if (foundUser) {
-      return res.status(400).json({
+      return res.status(200).json({
         success: false,
         message: 'Email is already in use',
       })
