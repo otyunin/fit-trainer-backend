@@ -38,7 +38,7 @@ module.exports = {
     await newUser.save()
 
     // Url to confirm email
-    const verificationUrl = `http://${req.headers.host}/verify-email/${newUser.email}/${verificationCode}`
+    const verificationUrl = `http://localhost:3000/verify-email/${newUser.email}/${verificationCode}`
 
     console.log('Email confirmation:', verificationUrl)
 

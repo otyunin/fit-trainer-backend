@@ -2,7 +2,7 @@ const router = require('express-promise-router')()
 
 const { verifyEmail } = require('../controllers/verifyEmail')
 
-router.route('/:email/:secret')
+router.route('/')
   .post(verifyEmail)
 
 module.exports = router
