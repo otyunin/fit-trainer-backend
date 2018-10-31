@@ -24,7 +24,7 @@ module.exports = {
         token,
       })
     } catch (err) {
-      return res.status(400).json({ success: false, error: '1' })
+      return res.status(400).json({ success: false, error: 'Something wrong' })
     }
   },
 }
