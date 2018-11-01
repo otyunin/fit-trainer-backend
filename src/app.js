@@ -3,6 +3,9 @@ const mongoose = require('mongoose')
 const morgan = require('morgan')
 const bodyParser = require('body-parser')
 const cors = require('cors')
+const auth = require('./routes/auth')
+const verifyEmail = require('./routes/verifyEmail')
+const exercise = require('./routes/exercise')
 
 const config = require('../config')
 
@@ -22,10 +25,6 @@ app.set('superSecret', config.secret) // secret variable
 app.use(cors())
 app.use(morgan('dev'))
 
-// Routes
-const auth = require('./routes/auth')
-const verifyEmail = require('./routes/verifyEmail')
-
 // Middlewares
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
@@ -44,6 +43,7 @@ app.get('/', (req, res) => {
 // API routers
 app.use('/', auth)
 app.use('/verify-email', verifyEmail)
+app.use('/exercises', exercise)
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {

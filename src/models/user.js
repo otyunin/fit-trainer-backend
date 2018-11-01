@@ -1,5 +1,6 @@
 const mongoose = require('mongoose')
 const bcrypt = require('bcrypt-nodejs')
+
 const Schema = mongoose.Schema
 
 const SALT_ROUNDS = 10
@@ -18,6 +19,7 @@ const UserSchema = new Schema({
     type: String,
     default: '',
   },
+  exercises: [{ type: Schema.Types.ObjectId, ref: 'Exercise', }],
   created: {
     type: Date,
     default: Date.now,
@@ -47,6 +49,6 @@ UserSchema.methods.isValidPassword = async function (newPassword) {
   }
 }
 
-const User = mongoose.model('user', UserSchema)
+const User = mongoose.model('User', UserSchema)
 
 module.exports = User
