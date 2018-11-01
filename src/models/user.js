@@ -19,7 +19,7 @@ const UserSchema = new Schema({
     type: String,
     default: '',
   },
-  exercises: [{ type: Schema.Types.ObjectId, ref: 'Exercise', }],
+  exercises: [{ type: Schema.Types.Object, ref: 'Exercise', }],
   created: {
     type: Date,
     default: Date.now,
@@ -49,6 +49,6 @@ UserSchema.methods.isValidPassword = async function (newPassword) {
   }
 }
 
-const User = mongoose.model('User', UserSchema)
+const User = mongoose.model('user', UserSchema)
 
 module.exports = User

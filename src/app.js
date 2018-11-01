@@ -8,6 +8,7 @@ const verifyEmail = require('./routes/verifyEmail')
 const exercise = require('./routes/exercise')
 
 const config = require('../config')
+const { checkToken } = require('./utils/token')
 
 const app = express()
 
@@ -43,7 +44,7 @@ app.get('/', (req, res) => {
 // API routers
 app.use('/', auth)
 app.use('/verify-email', verifyEmail)
-app.use('/exercises', exercise)
+app.use('/exercises', checkToken, exercise)
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
