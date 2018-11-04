@@ -18,7 +18,6 @@ module.exports = {
       const exercise = new Exercise({ name, measurement })
       // Save the exercise in the collection of exercises
       exercise.user = user
-      await exercise.save()
       // Save in the user's model
       user.exercises.push(exercise)
       await user.save()
@@ -32,6 +31,22 @@ module.exports = {
   getExercises: async (req, res) => {
     const userId = res.locals.user._id
     const user = await User.findById(userId).populate('Exercise')
+    if (!user) {
+      return res.status(400).json({success: false, message: 'The user is not found'})
+    }
+    res.status(200).json(user.exercises)
+  },
+  updateExercises: async (req, res) => {
+    const userId = res.locals.user._id
+    const user = await User.findById(userId).populate('Exercise')
+    if (!user) {
+      return res.status(400).json({success: false, message: 'The user is not found'})
+    }
+    if (req.body === user.exercises) {
+      return res.status(400).json({success: false, message: 'Nothing to update'})
+    }
+    user.exercises = req.body
+    user.save()
     res.status(200).json(user.exercises)
   },
 }

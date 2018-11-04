@@ -11,12 +11,12 @@ const signToken = user => {
 }
 
 const checkToken = function (req, res, next) {
-  passport.authenticate('jwt', { session: false }, function (err, user, info) {
+  passport.authenticate('jwt', { session: false }, function (err, user) {
     if (err) {
       return next(err) // will generate a 500 error
     }
     if (!user) {
-      return res.status(403).json({ success: false, message: info.message })
+      return res.status(403).json({ success: false, message: 'Token is invalid' })
     }
     res.locals.user = user
     next()
