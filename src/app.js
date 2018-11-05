@@ -20,6 +20,7 @@ mongoose.connect(config.database.url, config.database.options)
 mongoose.connection.on('error', error => {throw error})
 mongoose.Promise = global.Promise
 mongoose.set('useCreateIndex', true)
+mongoose.set('useFindAndModify', false)
 
 app.set('superSecret', config.secret) // secret variable
 

@@ -19,7 +19,6 @@ const UserSchema = new Schema({
     type: String,
     default: '',
   },
-  exercises: [{ type: Schema.Types.Object, ref: 'Exercise', }],
   created: {
     type: Date,
     default: Date.now,
