@@ -1,8 +1,5 @@
-const Exercise = require('../models/exercise')
 const Workout = require('../models/workout')
 const User = require('../models/user')
-
-const _ = require('lodash')
 
 module.exports = {
   createWorkout: async (req, res, next) => {
@@ -53,6 +50,24 @@ module.exports = {
         success: true,
         workout
       })
+    } catch (err) {
+      return res.status(400).json({ success: false, message: 'Something wrong' })
+    }
+  },
+  updateWorkout: async (req, res) => {
+    try {
+      const userId = res.locals.user._id
+      const user = await User.findById(userId)
+      if (!user) {
+        return res.status(400).json({ success: false, message: 'The user is not found' })
+      }
+      let updatedWorkout = req.body
+      const workout = await Workout.findById(updatedWorkout._id)
+      workout.exercises = updatedWorkout.exercises
+      workout.save()
+      workout.populate('exercises.exercise')
+
+      return res.status(200).json({ success: true, workout })
     } catch (err) {
       return res.status(400).json({ success: false, message: 'Something wrong' })
     }
