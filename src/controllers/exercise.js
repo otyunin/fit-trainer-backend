@@ -16,7 +16,7 @@ module.exports = {
           message: 'User not found',
         })
       }
-      const foundExercises = await Exercise.find({ user: userId }).populate('user')
+      const foundExercises = await Exercise.find({ user: userId })
       await user.save((err) => {
         if (err) next(err)
         const exercise = new Exercise({ name, measurement })

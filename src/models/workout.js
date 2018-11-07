@@ -18,6 +18,10 @@ const WorkoutExcercisesSchema = new Schema({
   order: {
     type: Number,
   },
+  date: {
+    type: Date,
+    required: true,
+  },
 })
 
 const WorkoutSchema = new Schema({
