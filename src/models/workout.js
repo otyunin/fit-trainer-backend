@@ -1,6 +1,7 @@
 const mongoose = require('mongoose')
 
 const Schema = mongoose.Schema
+const moment = require('moment')
 
 const WorkoutExcercisesSchema = new Schema({
   exercise: {
@@ -18,10 +19,6 @@ const WorkoutExcercisesSchema = new Schema({
   order: {
     type: Number,
   },
-  date: {
-    type: Date,
-    required: true,
-  },
 })
 
 const WorkoutSchema = new Schema({
@@ -29,6 +26,11 @@ const WorkoutSchema = new Schema({
   user: {
     type: Schema.Types.ObjectId,
     ref: 'user',
+  },
+  date: {
+    type: Date,
+    required: true,
+    set: dateStr => moment.utc(dateStr, 'MM-DD-YYYY').format(),
   },
 })
 

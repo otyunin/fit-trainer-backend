@@ -1,6 +1,7 @@
+const moment = require('moment')
+
 const toDate = (dateString) => {
-  const parts = dateString.split('-')
-  return new Date(parts[2], parts[1] - 1, parts[0])
+  return moment.utc(dateString, 'MM-DD-YYYY').format()
 }
 
 module.exports = toDate

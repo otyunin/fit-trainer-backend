@@ -2,7 +2,7 @@ const router = require('express-promise-router')()
 
 const { createWorkout, getWorkout, updateWorkout } = require('../controllers/workout')
 
-router.route('/')
+router.route('/:date')
   .get(getWorkout)
   .post(createWorkout)
   .put(updateWorkout)

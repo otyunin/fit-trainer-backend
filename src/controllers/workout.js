@@ -15,13 +15,13 @@ module.exports = {
           message: 'User not found',
         })
       }
-      if (!moment(toDate(req.params.date)).isValid()) {
+      if (!moment(req.params.date).isValid()) {
         return res.status(400).json({
           success: false,
           message: 'Date is invalid',
         })
       }
-      const foundWorkout = await Workout.find({ user: userId, date: toDate(req.params.date) })
+      const foundWorkout = await Workout.find({ user: userId, date: { $lte: toDate(req.params.date) } })
       if (foundWorkout) {
         return res.status(400).json({
           success: false,
@@ -38,7 +38,7 @@ module.exports = {
             order: exercise.order,
           })),
           user: user._id,
-          date: toDate(req.params.date),
+          date: req.params.date,
         })
         workout.save()
       })
@@ -60,7 +60,7 @@ module.exports = {
           message: 'User not found',
         })
       }
-      const workout = await Workout.findOne({ user: userId, date: toDate(req.params.date) })
+      const workout = await Workout.findOne({ user: userId, date: { $lte: toDate(req.params.date) } })
         .populate('exercises.exercise')
       if (!workout) {
         return res.status(400).json({
@@ -85,7 +85,7 @@ module.exports = {
         return res.status(400).json({ success: false, message: 'The user is not found' })
       }
       let updatedWorkout = req.body
-      const workout = await Workout.find({ _id: updatedWorkout._id, date: toDate(req.params.date) })
+      const workout = await Workout.findOne({ _id: updatedWorkout._id, date: { $lte: toDate(req.params.date) } })
       if (!workout) {
         return res.status(400).json({
           success: false,
