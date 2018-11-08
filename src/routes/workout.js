@@ -1,6 +1,9 @@
 const router = require('express-promise-router')()
 
-const { createWorkout, getWorkout, updateWorkout } = require('../controllers/workout')
+const { getWorkoutDates, createWorkout, getWorkout, updateWorkout } = require('../controllers/workout')
+
+router.route('/dates')
+  .get(getWorkoutDates)
 
 router.route('/:date')
   .get(getWorkout)

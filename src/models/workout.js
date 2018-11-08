@@ -30,7 +30,7 @@ const WorkoutSchema = new Schema({
   date: {
     type: Date,
     required: true,
-    set: dateStr => moment.utc(dateStr, 'MM-DD-YYYY').format(),
+    set: dateStr => moment.utc(dateStr, 'YYYY-MM-DD').format(),
   },
 })
 

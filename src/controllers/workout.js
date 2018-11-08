@@ -4,6 +4,29 @@ const toDate = require('../utils/date')
 const moment = require('moment')
 
 module.exports = {
+  getWorkoutDates: async (req, res) => {
+    try {
+      // Check if there is a user with the same email
+      const userId = res.locals.user._id
+      const user = await User.findById(userId)
+      if (!user) {
+        return res.status(400).json({
+          success: false,
+          message: 'User not found',
+        })
+      }
+      let workout = await Workout.find({ user: userId })
+      if (workout.length > 0) {
+        workout = workout.map(workoutExercise => workoutExercise.date)
+      }
+      res.status(200).json({
+        success: true,
+        dates: workout,
+      })
+    } catch (err) {
+      return res.status(400).json({ success: false, message: 'Something wrong' })
+    }
+  },
   createWorkout: async (req, res, next) => {
     try {
       // Check if there is a user with the same email
@@ -72,8 +95,7 @@ module.exports = {
           $lte: toDate(req.params.date),
           $gte: toDate(req.params.date),
         },
-      })
-        .populate('exercises.exercise')
+      }).populate('exercises.exercise')
       if (!workout) {
         return res.status(400).json({
           success: false,
