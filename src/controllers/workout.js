@@ -38,6 +38,18 @@ module.exports = {
           message: 'User not found',
         })
       }
+      if (req.body.length === 0) {
+        return res.status(400).json({
+          success: false,
+          message: 'A workout should not be empty',
+        })
+      }
+      if (moment(req.params.date, 'YYYY-MM-DD').isBefore(moment())) {
+        return res.status(400).json({
+          success: false,
+          message: 'You cannot create a workout on a date earlier than the current one',
+        })
+      }
       if (!moment(req.params.date).isValid()) {
         return res.status(400).json({
           success: false,
@@ -119,6 +131,12 @@ module.exports = {
         return res.status(400).json({ success: false, message: 'The user is not found' })
       }
       let updatedWorkout = req.body
+      if (updatedWorkout.length === 0) {
+        return res.status(400).json({
+          success: false,
+          message: 'A workout should not be empty',
+        })
+      }
       const workout = await Workout.findOne({ _id: updatedWorkout._id, date: { $lte: toDate(req.params.date) } })
       if (!workout) {
         return res.status(400).json({
