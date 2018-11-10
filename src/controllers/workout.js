@@ -154,4 +154,38 @@ module.exports = {
       return res.status(400).json({ success: false, message: 'Something wrong' })
     }
   },
+  deleteWorkout: async (req, res) => {
+    try {
+      // Check if there is a user with the same email
+      const userId = res.locals.user._id
+      const user = await User.findById(userId)
+      if (!user) {
+        return res.status(400).json({
+          success: false,
+          message: 'User not found',
+        })
+      }
+      const workout = await Workout.findOne({
+        user: userId,
+        date: {
+          $lte: toDate(req.params.date),
+          $gte: toDate(req.params.date),
+        },
+      })
+      if (!workout) {
+        return res.status(400).json({
+          success: false,
+          message: 'Workout not found',
+        })
+      }
+
+      workout.remove()
+
+      res.status(200).json({
+        success: true,
+      })
+    } catch (err) {
+      return res.status(400).json({ success: false, message: 'Something wrong' })
+    }
+  },
 }
