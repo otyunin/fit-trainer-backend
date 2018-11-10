@@ -1,8 +1,8 @@
 const mongoose = require('mongoose')
+
 const Schema = mongoose.Schema
 
 const ExerciseSchema = new Schema({
-  user: { type: Schema.Types.ObjectId, ref: 'User' },
   name: {
     type: String,
     required: true,
@@ -11,8 +11,15 @@ const ExerciseSchema = new Schema({
     type: String,
     required: true,
   },
+  order: {
+    type: Number,
+  },
+  user: {
+    type: Schema.Types.ObjectId,
+    ref: 'user',
+  },
 })
 
-const Exercise = mongoose.model('Exercise', ExerciseSchema)
+const Exercise = mongoose.model('exercise', ExerciseSchema)
 
 module.exports = Exercise

@@ -6,8 +6,10 @@ const cors = require('cors')
 const auth = require('./routes/auth')
 const verifyEmail = require('./routes/verifyEmail')
 const exercise = require('./routes/exercise')
+const workout = require('./routes/workout')
 
 const config = require('../config')
+const { checkToken } = require('./utils/token')
 
 const app = express()
 
@@ -19,6 +21,7 @@ mongoose.connect(config.database.url, config.database.options)
 mongoose.connection.on('error', error => {throw error})
 mongoose.Promise = global.Promise
 mongoose.set('useCreateIndex', true)
+mongoose.set('useFindAndModify', false)
 
 app.set('superSecret', config.secret) // secret variable
 
@@ -43,7 +46,8 @@ app.get('/', (req, res) => {
 // API routers
 app.use('/', auth)
 app.use('/verify-email', verifyEmail)
-app.use('/exercises', exercise)
+app.use('/exercises', checkToken, exercise)
+app.use('/workout', checkToken, workout)
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
