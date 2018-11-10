@@ -14,7 +14,10 @@ const ExerciseSchema = new Schema({
   order: {
     type: Number,
   },
-  user: { type: Schema.Types.ObjectId, ref: 'user' },
+  user: {
+    type: Schema.Types.ObjectId,
+    ref: 'user',
+  },
 })
 
 const Exercise = mongoose.model('exercise', ExerciseSchema)

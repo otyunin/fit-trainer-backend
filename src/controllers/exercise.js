@@ -16,7 +16,7 @@ module.exports = {
           message: 'User not found',
         })
       }
-      const foundExercises = await Exercise.find({ user: userId }).populate('user')
+      const foundExercises = await Exercise.find({ user: userId })
       await user.save((err) => {
         if (err) next(err)
         const exercise = new Exercise({ name, measurement })
@@ -37,7 +37,7 @@ module.exports = {
     if (!user) {
       return res.status(400).json({ success: false, message: 'The user is not found' })
     }
-    const exercises = await Exercise.find({ user: userId }).populate('user')
+    const exercises = await Exercise.find({ user: userId })
     res.status(200).json(exercises)
   },
   updateExercises: async (req, res, next) => {

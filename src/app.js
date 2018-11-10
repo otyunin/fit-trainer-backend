@@ -6,6 +6,7 @@ const cors = require('cors')
 const auth = require('./routes/auth')
 const verifyEmail = require('./routes/verifyEmail')
 const exercise = require('./routes/exercise')
+const workout = require('./routes/workout')
 
 const config = require('../config')
 const { checkToken } = require('./utils/token')
@@ -46,6 +47,7 @@ app.get('/', (req, res) => {
 app.use('/', auth)
 app.use('/verify-email', verifyEmail)
 app.use('/exercises', checkToken, exercise)
+app.use('/workout', checkToken, workout)
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
