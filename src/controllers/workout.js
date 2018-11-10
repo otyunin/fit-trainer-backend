@@ -44,7 +44,7 @@ module.exports = {
           message: 'A workout should not be empty',
         })
       }
-      if (moment(req.params.date, 'YYYY-MM-DD').isBefore(moment())) {
+      if (moment(req.params.date, 'YYYY-MM-DD').isBefore(moment().format('YYYY-MM-DD'))) {
         return res.status(400).json({
           success: false,
           message: 'You cannot create a workout on a date earlier than the current one',

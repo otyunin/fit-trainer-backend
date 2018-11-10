@@ -1,5 +1,6 @@
 const router = require('express-promise-router')()
 
+const { validateBody, schemas } = require('../helpers/workoutHelpers.js')
 const { getWorkoutDates, createWorkout, getWorkout, updateWorkout } = require('../controllers/workout')
 
 router.route('/dates')
@@ -7,7 +8,7 @@ router.route('/dates')
 
 router.route('/:date')
   .get(getWorkout)
-  .post(createWorkout)
-  .put(updateWorkout)
+  .post(validateBody(schemas.workoutsSchema), createWorkout)
+  .put(validateBody(schemas.workoutsSchema), updateWorkout)
 
 module.exports = router
