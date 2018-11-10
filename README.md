@@ -1,16 +1,23 @@
 # fit-trainer (Back-end)
 
- Project for internship in InCode Group.
+Internship project at InCode Group.
  
  ## Getting started
  
      $ git clone https://github.com/otyunin/fit-trainer-backend.git
      $ cd fit-trainer-backend
-     $ npm install
-     $ npm run start
+     $ npm install         
+     $ npm run start     
+     
+ You must start the MongoDB database before starting the server. 
+ 
+     On Linux:
+         $ sudo service mongod start
+     On Windows:
+         C:\Program Files\MongoDB\Server\<YOUR_VERSION>\bin\mongod.exe
  The server is running on the [http://localhost:8080/](http://localhost:8080/)
  
-[Front-end part](https://github.com/otyunin/fit-trainer-frontend.git/)  here
+Front-end part [here](https://github.com/otyunin/fit-trainer-frontend.git/)
 
  
  ## Scripts
@@ -22,9 +29,13 @@
    
       $ npm run dev
 
-   
+## Tips
 
- 
- 
+If the port is occupied by another process:
 
- 
+     On Linux:
+         $ fuser -k -n tcp <PortNumber>
+         $ kill -9 <ProcessID>
+     On Windows:
+         $ netstat -ano | findstr :<PortNumber>
+         $ taskkill /PID <ProcessID> /F
