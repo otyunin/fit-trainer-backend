@@ -10,7 +10,7 @@ module.exports = {
         return next(err) // will generate a 500 error
       }
       if (!user) {
-        return res.status(200).json({ success: false, message: info.message })
+        return res.status(400).json({ success: false, message: info.message })
       }
       // Generate the token
       const token = signToken(user)
@@ -25,7 +25,7 @@ module.exports = {
     // Check if there is a user with the same email
     const foundUser = await User.findOne({ email })
     if (foundUser) {
-      return res.status(200).json({
+      return res.status(400).json({
         success: false,
         message: 'Email is already in use',
       })
