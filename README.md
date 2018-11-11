@@ -7,14 +7,14 @@ Internship project at InCode Group.
     $ cd fit-trainer-backend
     $ npm install    
  
-  You must start the MongoDB database before starting the server. 
+  **You must start the MongoDB database before starting the server.** 
   
       On Linux:
           $ sudo service mongod start
       On Windows:
           C:\Program Files\MongoDB\Server\<YOUR_VERSION>\bin\mongod.exe
           
-Then start the server: 
+**Then start the server:** 
          
      $ npm run start     
      
