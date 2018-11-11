@@ -11,7 +11,7 @@ const workoutsSchema = Joi.array().items(workoutSchema)
 module.exports = {
   validateBody: () => {
     return (req, res, next) => {
-      const { error } = Joi.validate(req.body, workoutsSchema, { allowUnknown: true })
+      const { error } = Joi.validate(req.body.exercises, workoutsSchema, { allowUnknown: true })
 
       if (error) {
         return res.status(400).json({
