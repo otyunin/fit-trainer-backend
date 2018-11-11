@@ -114,6 +114,12 @@ module.exports = {
           message: 'Workout not found',
         })
       }
+      workout.exercises.forEach((exercise, index) => {
+        if (exercise.exercise === null) {
+          workout.exercises.splice(index, 1)
+        }
+      })
+      workout.save()
 
       res.status(200).json({
         success: true,
