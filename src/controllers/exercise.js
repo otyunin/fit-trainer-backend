@@ -73,4 +73,37 @@ module.exports = {
       return res.status(400).json({ success: false, message: 'Something wrong' })
     }
   },
+  deleteExercise: async (req, res) => {
+    try {
+      const userId = res.locals.user._id
+      const user = await User.findById(userId).populate('Exercise')
+      if (!user) {
+        return res.status(400).json({ success: false, message: 'The user is not found' })
+      }
+      const id = req.params.id
+      const foundExercise = await Exercise.findById(id)
+
+      if (!foundExercise) {
+        return res.status(400).json({
+          success: false,
+          message: 'Exercise is not found',
+        })
+      }
+
+      const exercises = await Exercise.find({ user: userId })
+
+      exercises.forEach(exercise => {
+        if (exercise.order > foundExercise.order) {
+          exercise.order -= 1
+          exercise.save()
+        }
+      })
+
+      foundExercise.remove()
+
+      return res.status(200).json({ success: true })
+    } catch (err) {
+      return res.status(400).json({ success: false, message: 'Something wrong' })
+    }
+  },
 }

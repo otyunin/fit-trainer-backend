@@ -7,7 +7,7 @@ const {
   getWorkout,
   updateWorkout,
   deleteWorkout,
-  deleteWorkoutExercise
+  deleteWorkoutExercise,
 } = require('../controllers/workout')
 
 router.route('/dates')

@@ -226,9 +226,7 @@ module.exports = {
         })
       }
 
-      const indexToRemove = workout.exercises.findIndex(exercise => {
-        return exercise._id == req.params.id
-      })
+      const indexToRemove = workout.exercises.findIndex(exercise => exercise._id == req.params.id)
 
       if (indexToRemove === -1) {
         return res.status(400).json({
