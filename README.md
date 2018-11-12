@@ -23,6 +23,7 @@ Internship project at InCode Group.
 **Front-end part [here](https://github.com/otyunin/fit-trainer-frontend.git/)**
 
  ## If the port is occupied by another process:
+ listen EADDRINUSE: address already in use :::8080...
  
       On Linux:
           $ fuser -k -n tcp <PortNumber>
